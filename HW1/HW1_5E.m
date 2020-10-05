@@ -7,7 +7,7 @@ c = 0; d = 1;
 
 % M_list and noiter_list
 
-M_list = [10, 21, 30, 42, 50];
+M_list = 10:10:100;
 M_list = M_list+1;
 noiter_list = zeros(size(M_list));
 
@@ -55,6 +55,9 @@ for loop = 1:size(M_list,2)
         u(M+2,2:M-1) = u(M,2:M-1);
         current_error = u-exact_u;
         error = norm(u-exact_u);
+        if noiter > 100000
+            break
+        end
     end
     noiter_list(loop) = noiter;
 end
@@ -78,11 +81,11 @@ hold off
 ax = gca;
 ax.YAxis.FontSize = 13;
 ax.XAxis.FontSize = 13;
-xlim([0,51.^2.*log(51)]);
+
 xlabel('$m^2logm$','Interpreter','latex', 'FontSize', 24)
 ylabel('Number of iterations','Interpreter','latex', 'FontSize', 24)
 lgd = legend("$f(y) = cos(2\pi y)$", "$\hat{f}(y) = sgn\left(cos(2\pi y)\right)$",'FontSize', 24,...
-       'Interpreter','latex','Location','northwest');
+       'Interpreter','latex','Location','east');
    
 saveas(gcf,'HW1_5E.png')
 
